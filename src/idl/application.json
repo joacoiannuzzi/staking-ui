@@ -1,0 +1,224 @@
+{
+  "version": "0.1.0",
+  "name": "application",
+  "instructions": [
+    {
+      "name": "initialize",
+      "accounts": [
+        {
+          "name": "baseAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "generalAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "generalProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "jobAdId",
+          "type": "string"
+        },
+        {
+          "name": "applicationId",
+          "type": "string"
+        },
+        {
+          "name": "generalBump",
+          "type": "u8"
+        },
+        {
+          "name": "maxAllowedStake",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "updateStatus",
+      "accounts": [
+        {
+          "name": "baseAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "jobAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "jobProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "instruction",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "applicationId",
+          "type": "string"
+        },
+        {
+          "name": "applicationBump",
+          "type": "u8"
+        },
+        {
+          "name": "jobId",
+          "type": "string"
+        },
+        {
+          "name": "jobBump",
+          "type": "u8"
+        },
+        {
+          "name": "status",
+          "type": {
+            "defined": "JobStatus"
+          }
+        }
+      ]
+    },
+    {
+      "name": "updateStakeAmount",
+      "accounts": [
+        {
+          "name": "baseAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "instruction",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "applicationId",
+          "type": "string"
+        },
+        {
+          "name": "applicationBump",
+          "type": "u8"
+        },
+        {
+          "name": "stakeAmount",
+          "type": "u64"
+        },
+        {
+          "name": "rewardAmount",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "ApplicationParameter",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "publicKey"
+          },
+          {
+            "name": "status",
+            "type": {
+              "defined": "JobStatus"
+            }
+          },
+          {
+            "name": "stakedAmount",
+            "type": "u64"
+          },
+          {
+            "name": "maxAllowedStaked",
+            "type": "u64"
+          },
+          {
+            "name": "totalRewardAmount",
+            "type": "u64"
+          },
+          {
+            "name": "updateRewardValueInJob",
+            "type": "bool"
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "JobStatus",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Rejected"
+          },
+          {
+            "name": "SelectedButCantWithdraw"
+          },
+          {
+            "name": "Selected"
+          },
+          {
+            "name": "Pending"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "AmountUnderflow",
+      "msg": "Amount underflowed"
+    },
+    {
+      "code": 6001,
+      "name": "StatusNotPending",
+      "msg": "Status isn't Pending"
+    },
+    {
+      "code": 6002,
+      "name": "NotEnoughStakeAvailable",
+      "msg": "Staking available is less than what the user wants to stake"
+    }
+  ],
+  "metadata": {
+    "address": "7NBejsPH8cgtSkmqgSKyUffx8fYnrGCDp9fxePdjRXe7"
+  }
+}
